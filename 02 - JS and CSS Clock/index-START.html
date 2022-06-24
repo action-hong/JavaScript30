@@ -62,13 +62,53 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: right center;
+    }
+
+    .hour-hand {
+      width: 30%;
+      left: 20%;
+    }
+
+    .min-hand {
+      width: 40%;
+      left: 10%;
+    }
+
+    .sec-hand {
+      width: 50%;
     }
 
   </style>
 
   <script>
+    const hour = document.querySelector('.hour-hand');
+    const min = document.querySelector('.min-hand');
+    const sec = document.querySelector('.second-hand');
+    
+    function update() {
+      const date = new Date();
+      const h = date.getHours();
+      const m = date.getMinutes();
+      const s = date.getSeconds();
 
+      // 一小时的角度 = 360 / 12 = 30度
+      // 一分钟的角度 = 30 / 60 = 0.5度
+      // 一秒钟的角度 = 0.5 / 60度
+      const hd = h % 12 / 12 * 360 + m / 60 * 30 + s / 60 * 0.5 + 90;
+      // 一分钟的角度 = 360 / 60 = 6度
+      // 一秒钟的角度 = 6 / 60 = 0.1度
+      const md = m / 60 * 360 + s / 60 * 6 + 90
+      const sd = s / 60 * 360 + 90
+      console.log(h, m, s);
 
+      hour.style.transform = `rotate(${hd}deg)`;
+      min.style.transform = `rotate(${md}deg)`;
+      sec.style.transform = `rotate(${sd}deg)`;
+    }
+
+    setInterval(update, 1000);
+    update()
   </script>
 </body>
 </html>
